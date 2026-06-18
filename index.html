@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header/Hero Section */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .name-input {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .name-input input {
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.8);
+            min-width: 220px;
+            font-size: 1em;
+        }
+
+        .name-input input:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .heart {
+            color: #ff6b9d;
+            font-size: 1.2em;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        nav button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Game Section */
+        .game-section {
+            display: block;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .game-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .game-section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .game-question {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .btn-yes, .btn-no {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-yes {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background: #ff6b9d;
+            color: white;
+            position: relative;
+        }
+
+        .btn-no:hover {
+            background: #e85178;
+            transform: scale(1.05);
+        }
+
+        .game-response {
+            display: none;
+            font-size: 1.5em;
+            color: #667eea;
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(102, 126, 234, 0.08);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .game-response.show {
+            display: block;
+        }
+
+        .hearts {
+            font-size: 3em;
+            margin-top: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .gallery-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .upload-area:hover {
+            background: #f0f0ff;
+            border-color: #764ba2;
+        }
+
+        .upload-area p {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Story Section */
+        .story-section {
+            display: block;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .story-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .story-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .story-content {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .story-editor {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .story-editor h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .editor-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .editor-controls button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .editor-controls button:hover {
+            background: #764ba2;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .button-group button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #764ba2;
+        }
+
+        .btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-edit {
+            background: #ff6b9d;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .btn-edit:hover {
+            background: #ff5588;
+        }
+
+        /* Couple Photo Section */
+        .couple-photo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .couple-photo-display {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .couple-photo-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .couple-photo-placeholder {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            padding: 80px 40px;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .upload-couple-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-couple-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .delete-couple-btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .delete-couple-btn:hover {
+            transform: translateY(-2px);
+            background: #e84c82;
+        }
+
+        /* Music Player */
+        .music-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .music-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-player {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .music-player audio {
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .song-info {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .song-status {
+            text-align: center;
+            font-size: 1em;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .upload-song-area {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-song-area:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        #songInput, #songInput2 {
+            display: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            background: white;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            transform: translateY(-2px);
+            background: #667eea;
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-section,
+            .story-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 id="heroTitle">Our Love Story <span class="heart">❤️</span></h1>
+            <p id="heroSubtitle">A special place to celebrate her and our memories together</p>
+            <div class="name-input">
+                <input id="herNameInput" type="text" placeholder="Enter her name" />
+                <button class="btn-save" onclick="saveHerName()" style="padding: 12px 25px;">Save Name</button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+            <a href="#gallery">Gallery</a>
+            <a href="#story">Story</a>
+            <a href="#game">🎮 Love Game</a>
+            <a href="#music">🎵 Music</a>
+        </nav>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <button class="btn-save" onclick="requestFullScreen()" style="background: white; color: #667eea; border-radius: 25px; padding: 12px 30px; font-size: 1em; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Go Full Screen</button>
+        </div>
+
+        <!-- Music & Photos Page -->
+        <div class="gallery-section" id="music">
+            <div class="couple-photo">
+                <div class="couple-photo-display" id="couplePhotoDisplayMusic">
+                    <div class="couple-photo-placeholder">📸 Upload your couple photo</div>
+                </div>
+                <input type="file" id="couplePhotoInputMusic" accept="image/*" style="display: none;">
+                <button class="upload-couple-btn" onclick="uploadCouplePhotoMusic()">📷 Upload Our Photo</button>
+                <button class="delete-couple-btn" onclick="deleteCouplePhoto()">🗑️ Remove Photo</button>
+            </div>
+
+            <div class="music-section">
+                <h2>🎵 Our Love Song 🎵</h2>
+                <div class="music-player">
+                    <div class="song-info" id="songTitle">Playing our special song...</div>
+                    <audio id="audioPlayer" controls style="width: 100%;"></audio>
+                    <div class="song-status" id="songStatus">Upload a love song to play it.</div>
+                    <button class="btn-yes" onclick="playCurrentSong()" style="margin-top: 10px;">Play Song</button>
+                    <div style="margin-top: 15px;">
+                        <div class="upload-song-area" id="uploadSongArea" onclick="document.getElementById('songInput').click()">
+                            <p>🎶 Click to upload a love song</p>
+                            <p style="font-size: 0.9em; opacity: 0.9;">MP3, WAV, or OGG (max 50MB)</p>
+                        </div>
+                        <input type="file" id="songInput" accept="audio/*">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="gallery-section active" id="gallery">
+            <div class="upload-section">
+                <h2>Upload Photos</h2>
+                <div class="upload-area" id="uploadArea">
+                    <p>🖼️ Click or drag photos here</p>
+                    <p style="font-size: 0.9em; color: #999;">PNG, JPG, GIF up to 10MB</p>
+                </div>
+                <input type="file" id="imageInput" accept="image/*" multiple>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <button style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; font-weight: bold;" id="uploadBtn">
+                    💾 Save Photos to Gallery
+                </button>
+            </div>
+
+            <div class="gallery" id="photoGallery"></div>
+        </div>
+
+        <!-- Story Section -->
+        <div class="story-section" id="story">
+            <h2>Her Story & Our Love <span class="heart">💕</span></h2>
+            <div id="storyContent" class="story-content"></div>
+            <div class="story-editor">
+                <div id="editControls" style="display: none;">
+                    <h3>Edit Your Story</h3>
+                    <div class="editor-controls">
+                        <button onclick="insertMarkdown('**', '**', 'Bold')">Bold</button>
+                        <button onclick="insertMarkdown('_', '_', 'Italic')">Italic</button>
+                        <button onclick="insertMarkdown('\n# ', '\n\n', 'Heading')">Heading</button>
+                        <button onclick="insertMarkdown('\n\n', '', 'New Paragraph')">¶ Paragraph</button>
+                    </div>
+                    <textarea id="storyText" placeholder="Write your beautiful story here..."></textarea>
+                    <div class="button-group">
+                        <button class="btn-save" onclick="saveStory()">Save Story</button>
+                        <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+                <button class="btn-edit" id="editBtn" onclick="enterEditMode()">✏️ Write Her Story</button>
+            </div>
+        </div>
+
+        <!-- Game Section -->
+        <div class="game-section" id="game">
+            <h2>💕 Do You Love Me? 💕</h2>
+            <div class="game-question">Do you really love me?</div>
+            <div class="game-buttons">
+                <button class="btn-yes" onclick="answerYes()">YES! ❤️</button>
+                <button class="btn-no" id="noBtn" onclick="answerNo()">No 😔</button>
+            </div>
+            <div class="game-response" id="gameResponse">
+                <p id="gameMessage">I knew it! 💕 You're the best!</p>
+                <div class="hearts" id="gameHearts">❤️ 💕 ❤️</div>
+                <button class="btn-save" onclick="resetGame()" style="margin-top: 20px;">Try again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store photos and story in localStorage
+        let selectedPhotos = [];
+
+        // Upload Area
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        uploadArea.addEventListener('click', () => imageInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '#f0f0ff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = '#f9f9f9';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '#f9f9f9';
+            handleFiles(e.dataTransfer.files);
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            selectedPhotos = [];
+            imagePreview.innerHTML = '';
+
+            Array.from(files).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        selectedPhotos.push({
+                            data: e.target.result,
+                            name: file.name
+                        });
+                        
+                        const div = document.createElement('div');
+                        div.className = 'preview-item';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" alt="preview">
+                            <button onclick="removePhoto(${selectedPhotos.length - 1})">×</button>
+                        `;
+                        imagePreview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function removePhoto(index) {
+            selectedPhotos.splice(index, 1);
+            displayPreviews();
+        }
+
+        function displayPreviews() {
+            imagePreview.innerHTML = '';
+            selectedPhotos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${photo.data}" alt="preview">
+                    <button onclick="removePhoto(${index})">×</button>
+                `;
+                imagePreview.appendChild(div);
+            });
+        }
+
+        // Save Photos to Gallery
+        document.getElementById('uploadBtn').addEventListener('click', () => {
+            if (selectedPhotos.length === 0) {
+                alert('Please select photos first!');
+                return;
+            }
+
+            const savedPhotos = JSON.parse(localStorage.getItem('photos')) || [];
+            selectedPhotos.forEach(photo => {
+                savedPhotos.push(photo);
+            });
+            localStorage.setItem('photos', JSON.stringify(savedPhotos));
+            
+            selectedPhotos = [];
+            imagePreview.innerHTML = '';
+            imageInput.value = '';
+            
+            displayGallery();
+            alert('Photos saved successfully! 🎉');
+        });
+
+        // Display Gallery
+        function displayGallery() {
+            const gallery = document.getElementById('photoGallery');
+            const photos = JSON.parse(localStorage.getItem('photos')) || [];
+            
+            gallery.innerHTML = '';
+            photos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `
+                    <img src="${photo.data}" alt="Gallery photo">
+                    <div class="caption">
+                        <div style="margin-bottom: 10px;">${photo.name}</div>
+                        <button onclick="deletePhoto(${index})" style="background: #ff6b9d; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Delete</button>
+                    </div>
+                `;
+                gallery.appendChild(div);
+            });
+        }
+
+        function deletePhoto(index) {
+            if (confirm('Delete this photo?')) {
+                const photos = JSON.parse(localStorage.getItem('photos')) || [];
+                photos.splice(index, 1);
+                localStorage.setItem('photos', JSON.stringify(photos));
+                displayGallery();
+            }
+        }
+
+        // Story Functions
+        function enterEditMode() {
+            document.getElementById('editControls').style.display = 'block';
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('storyText').value = localStorage.getItem('story') || '';
+            document.getElementById('storyText').focus();
+        }
+
+        function cancelEdit() {
+            document.getElementById('editControls').style.display = 'none';
+            document.getElementById('editBtn').style.display = 'block';
+        }
+
+        function saveStory() {
+            const story = document.getElementById('storyText').value;
+            localStorage.setItem('story', story);
+            displayStory();
+            cancelEdit();
+            alert('Story saved! 💕');
+        }
+
+        function displayStory() {
+            const story = localStorage.getItem('story') || '';
+            const content = document.getElementById('storyContent');
+            
+            if (!story) {
+                content.innerHTML = '<p style="color: #999; font-style: italic;">Click "Write Her Story" to add your beautiful story...</p>';
+                return;
+            }
+
+            // Simple markdown to HTML conversion
+            let html = story
+                .split('\n')
+                .map(line => {
+                    if (line.startsWith('# ')) {
+                        return `<h3>${line.substring(2)}</h3>`;
+                    }
+                    if (line.startsWith('## ')) {
+                        return `<h4>${line.substring(3)}</h4>`;
+                    }
+                    return line;
+                })
+                .join('</p><p>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/_(.*?)_/g, '<em>$1</em>');
+            
+            content.innerHTML = `<p>${html}</p>`;
+        }
+
+        function insertMarkdown(before, after, placeholder) {
+            const textarea = document.getElementById('storyText');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const selectedText = text.substring(start, end) || placeholder;
+            const newText = text.substring(0, start) + before + selectedText + after + text.substring(end);
+            
+            textarea.value = newText;
+            textarea.focus();
+            textarea.selectionStart = start + before.length;
+            textarea.selectionEnd = start + before.length + selectedText.length;
+        }
+
+        // Couple Photo Functions
+        function uploadCouplePhotoMusic() {
+            document.getElementById('couplePhotoInputMusic').click();
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'couplePhotoInputMusic') {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        localStorage.setItem('couplePhoto', imageData);
+                        displayCouplePhoto();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            if (e.target.id === 'songInput') {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const songData = event.target.result;
+                        const songName = file.name;
+
+                        localStorage.setItem('loveSong', songData);
+                        localStorage.setItem('loveSongName', songName);
+                        setSongSource(songData, songName);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        function displayCouplePhoto() {
+            const photoData = localStorage.getItem('couplePhoto');
+            const photoDisplay = document.getElementById('couplePhotoDisplayMusic');
+            
+            if (photoData) {
+                photoDisplay.innerHTML = `<img src="${photoData}" alt="Our couple photo">`;
+            } else {
+                photoDisplay.innerHTML = `<div class="couple-photo-placeholder">📸 Upload your couple photo</div>`;
+            }
+        }
+
+        function deleteCouplePhoto() {
+            if (confirm('Delete this couple photo?')) {
+                localStorage.removeItem('couplePhoto');
+                displayCouplePhoto();
+            }
+        }
+
+        function setSongSource(songData, songName) {
+            const player = document.getElementById('audioPlayer');
+            const title = document.getElementById('songTitle');
+            const status = document.getElementById('songStatus');
+
+            player.src = songData;
+            player.load();
+            title.textContent = '🎵 ' + songName + ' 🎵';
+            status.textContent = 'Your song is ready. Click Play Song below.';
+
+            // Play automatically on user gesture when possible.
+            player.play().catch(() => {
+                // Fallback: the user can click the control manually.
+            });
+        }
+
+        function playSong() {
+            const songData = localStorage.getItem('loveSong');
+            const songName = localStorage.getItem('loveSongName') || 'Our Love Song';
+            const player = document.getElementById('audioPlayer');
+            const title = document.getElementById('songTitle');
+            const status = document.getElementById('songStatus');
+            
+            if (songData) {
+                player.src = songData;
+                player.load();
+                title.textContent = '🎵 ' + songName + ' 🎵';
+                status.textContent = 'Your saved song is loaded. Click Play Song below.';
+            } else {
+                status.textContent = 'Upload a love song to play it.';
+            }
+        }
+
+        function playCurrentSong() {
+            const player = document.getElementById('audioPlayer');
+            const status = document.getElementById('songStatus');
+            if (!player.src) {
+                status.textContent = 'No song loaded yet. Upload a song first.';
+                return;
+            }
+            player.play().then(() => {
+                status.textContent = 'Playing your love song 🎶';
+            }).catch(() => {
+                status.textContent = 'Tap the play button in the audio player if playback is blocked.';
+            });
+        }
+
+        function displayHerName() {
+            const name = localStorage.getItem('herName') || '';
+            const title = document.getElementById('heroTitle');
+            const subtitle = document.getElementById('heroSubtitle');
+            const input = document.getElementById('herNameInput');
+
+            if (name) {
+                title.innerHTML = `Our Love Story with ${name} <span class="heart">❤️</span>`;
+                subtitle.textContent = `A special place to celebrate ${name} and our memories together`;
+                input.value = name;
+            } else {
+                title.innerHTML = `Our Love Story <span class="heart">❤️</span>`;
+                subtitle.textContent = 'A special place to celebrate her and our memories together';
+                input.value = '';
+            }
+        }
+
+        function saveHerName() {
+            const input = document.getElementById('herNameInput');
+            const name = input.value.trim();
+            if (!name) {
+                alert('Please enter her name.');
+                return;
+            }
+            localStorage.setItem('herName', name);
+            displayHerName();
+            alert(`Saved ${name}! 🌹`);
+        }
+
+        // Initialize
+        function initializeAll() {
+            displayGallery();
+            displayStory();
+            displayCouplePhoto();
+            playSong();
+            displayHerName();
+        }
+
+        // Game Functions
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const randomX = Math.random() * 300 - 150;
+            const randomY = Math.random() * 300 - 150;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function answerYes() {
+            document.getElementById('gameMessage').textContent = 'I knew it! 💕 You truly care!';
+            document.getElementById('gameHearts').textContent = '❤️ 💕 ❤️';
+            showGameOutcome();
+        }
+
+        function answerNo() {
+            document.getElementById('gameMessage').textContent = 'Oops! The button got away, but love still wins. 💖';
+            document.getElementById('gameHearts').textContent = '💔 😢 💔';
+            showGameOutcome();
+        }
+
+        function showGameOutcome() {
+            document.getElementById('gameResponse').classList.add('show');
+            document.querySelector('.game-buttons').style.display = 'none';
+        }
+
+        function resetGame() {
+            document.getElementById('gameResponse').classList.remove('show');
+            document.querySelector('.game-buttons').style.display = 'flex';
+            document.getElementById('noBtn').style.transform = 'translate(0, 0)';
+        }
+
+        function requestFullScreen() {
+            const el = document.documentElement;
+            if (el.requestFullscreen) {
+                el.requestFullscreen();
+            } else if (el.webkitRequestFullscreen) {
+                el.webkitRequestFullscreen();
+            } else if (el.mozRequestFullScreen) {
+                el.mozRequestFullScreen();
+            } else if (el.msRequestFullscreen) {
+                el.msRequestFullscreen();
+            } else {
+                alert('Fullscreen is not supported by this browser.');
+            }
+        }
+
+        initializeAll();
+    </script>
+</body>
+</html>
